@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Xynteo chat",
+  "scripts": {
+    "deploy": "ecs-updater"
+  },
   "devDependencies": {
     "@decorators/di": "^1.0.1",
     "@decorators/express": "^2.2.0",
@@ -11,9 +14,11 @@
     "@types/node": "^7.0.5",
     "@types/socket.io": "^1.4.31",
     "@types/winston": "^2.3.7",
+    "ecs-updater": "^0.3.6",
     "typescript": "^2.6.2"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "socket.io": "^2.0.4",
     "winston": "^2.4.0"
   }

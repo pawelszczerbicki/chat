@@ -4,7 +4,7 @@
     "target": "es6",
     "noImplicitAny": false,
     "sourceMap": true,
-    "outDir": "dist",
+    "outDir": ".dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictNullChecks": true,

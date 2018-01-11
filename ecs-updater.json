@@ -1,0 +1,7 @@
+{
+  "REGION": "eu-west-1",
+  "CLUSTER": "xynteo",
+  "SERVICE": "chat-test",
+  "CONTAINER": "chat",
+  "IMAGE": "xynteo-chat"
+}
