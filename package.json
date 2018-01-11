@@ -18,6 +18,7 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
+    "@decorators/socket": "^3.0.0",
     "express": "^4.16.2",
     "socket.io": "^2.0.4",
     "winston": "^2.4.0"
