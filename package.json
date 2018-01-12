@@ -4,7 +4,7 @@
   "private": true,
   "description": "Xynteo chat",
   "scripts": {
-    "deploy": "ecs-updater"
+    "deploy": "npm install && tsc && ecs-updater"
   },
   "devDependencies": {
     "@decorators/di": "^1.0.1",
