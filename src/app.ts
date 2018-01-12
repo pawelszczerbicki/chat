@@ -1,5 +1,5 @@
 import * as express from 'express';
-import {DEF_PORT, PORT} from "./config/keys";
+import {AUTHORIZATION, DEF_PORT, PORT} from "./config/keys";
 import * as log from "winston";
 import {getProp} from "./config/config";
 import {createServer, Server} from 'http';
@@ -38,7 +38,9 @@ log.configure({
 class ServerMiddleware implements Middleware {
 
     public use(io, socket, next) {
-        next();
+        if (!socket.request.headers[AUTHORIZATION])
+            next(new Error("Not authorized"));
+        else next();
     }
 }
 
