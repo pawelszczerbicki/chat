@@ -1,1 +1,1 @@
-export const getProp = (key: string, def: any) => process.env[key] || def;
+export const getProp = (key: string, def?: any) => process.env[key] || def;

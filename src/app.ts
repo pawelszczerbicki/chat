@@ -1,5 +1,5 @@
 import * as express from 'express';
-import {AUTHORIZATION, DEF_PORT, PORT} from "./config/keys";
+import {DEF_PORT, PORT} from "./config/keys";
 import * as log from "winston";
 import {getProp} from "./config/config";
 import {createServer, Server} from 'http';
@@ -7,7 +7,7 @@ import * as socketIo from 'socket.io';
 import {attachControllers, IO_MIDDLEWARE, Middleware} from "@decorators/socket";
 import {Index} from './index';
 import {Container, Injectable} from "@decorators/di";
-import Socket = SocketIO.Socket;
+import {AuthMiddleware} from "./auth/auth.middleware";
 
 @Injectable()
 export class App {
@@ -36,17 +36,6 @@ log.configure({
     transports: [new log.transports.Console({colorize: true})]
 });
 
-class ServerMiddleware implements Middleware {
-
-    public use(io, socket: Socket, next) {
-        if (!socket.handshake.query[AUTHORIZATION])
-            next(new Error("Not authorized"));
-        else next();
-    }
-}
-
-Container.provide([
-    {provide: IO_MIDDLEWARE, useClass: ServerMiddleware}
-]);
+Container.provide([{provide: IO_MIDDLEWARE, useClass: AuthMiddleware}]);
 
 Container.get<App>(App).start();
