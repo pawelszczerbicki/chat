@@ -7,6 +7,7 @@ import * as socketIo from 'socket.io';
 import {attachControllers, IO_MIDDLEWARE, Middleware} from "@decorators/socket";
 import {Index} from './index';
 import {Container, Injectable} from "@decorators/di";
+import Socket = SocketIO.Socket;
 
 @Injectable()
 export class App {
@@ -37,8 +38,8 @@ log.configure({
 
 class ServerMiddleware implements Middleware {
 
-    public use(io, socket, next) {
-        if (!socket.request.headers[AUTHORIZATION])
+    public use(io, socket: Socket, next) {
+        if (!socket.handshake.query[AUTHORIZATION])
             next(new Error("Not authorized"));
         else next();
     }
