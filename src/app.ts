@@ -1,7 +1,7 @@
 import * as express from 'express';
-import {DEF_PORT, PORT} from "./keys";
+import {DEF_PORT, PORT} from "./config/keys";
 import * as log from "winston";
-import {getProp} from "./config";
+import {getProp} from "./config/config";
 import {createServer, Server} from 'http';
 import * as socketIo from 'socket.io';
 import {attachControllers, IO_MIDDLEWARE, Middleware} from "@decorators/socket";

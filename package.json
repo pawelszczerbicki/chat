@@ -4,7 +4,9 @@
   "private": true,
   "description": "Xynteo chat",
   "scripts": {
-    "deploy": "npm install && tsc && ecs-updater"
+    "deploy:test": "SERVICE=chat-test npm run deploy",
+    "deploy": "npm install && tsc && ecs-updater",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts"
   },
   "devDependencies": {
     "@decorators/di": "^1.0.1",
@@ -15,6 +17,8 @@
     "@types/socket.io": "^1.4.31",
     "@types/winston": "^2.3.7",
     "ecs-updater": "^0.3.6",
+    "nodemon": "^1.14.11",
+    "ts-node": "^4.1.0",
     "typescript": "^2.6.2"
   },
   "dependencies": {
