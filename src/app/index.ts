@@ -13,7 +13,7 @@ export class Index {
 
     @Event('message')
     onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket) {
-        socket.to(msg.to).emit("message", msg.text)
+        socket.nsp.to(msg.to).emit("message", msg.text)
     }
 
     @Event('nick')
