@@ -2,6 +2,7 @@ import {Args, attachControllers, Controller, Event, Socket} from '@decorators/so
 import {Injectable} from "@decorators/di";
 import {UserSocketDao} from "./socket/user.socket.dao";
 import {ChannelDao} from "./channel/channel.dao";
+import {Channel} from "./channel/channel";
 
 @Injectable()
 @Controller('/')
@@ -22,7 +23,7 @@ export class Index {
     }
 
     @Event('createChannel')
-    createChannel(@Args() channel, @Socket() socket: SocketIO.Socket) {
+    createChannel(@Args() channel: Channel, @Socket() socket: SocketIO.Socket) {
         channel.id = this.channelDao.channelId(channel);
         socket.join(channel.id, () => socket.emit("channelCreated", channel));
         channel.users.forEach(u => {
