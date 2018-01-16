@@ -11,5 +11,11 @@
     "typeRoots": [
       "./node_modules/@types"
     ]
-  }
+  },
+  "include": [
+    "./src/app/**/*"
+  ],
+  "exclude": [
+    "./src/test/**/*"
+  ]
 }
