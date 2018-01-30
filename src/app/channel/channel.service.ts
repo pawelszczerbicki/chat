@@ -19,10 +19,10 @@ export class ChannelService {
     async createChannel(channel: Channel, socket: SocketIO.Socket) {
         //TODO get user from socket if auth enabled
         let userSocket = await this.socketDao.getUserBySocket(socket.id);
-        channel.users.push((userSocket).user);
+        channel.users.push(userSocket.user);
 
-        this.channelDao.getOrCreate(channel)
-            .then(channel => channel.users.forEach(u => this.joinUser(u, channel, socket)));
+        let fetched = await this.channelDao.getOrCreate(channel);
+        fetched.users.forEach(u => this.joinUser(u, channel, socket));
     }
 
     async pushMessage(text: string, channelId: string, socketId: string) {
