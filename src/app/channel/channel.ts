@@ -1,7 +1,7 @@
 import {MessageHistory} from '../message/message.history';
 
 export interface Channel {
-    id: string;
+    _id: string;
     users: string[];
     history: MessageHistory[];
 }

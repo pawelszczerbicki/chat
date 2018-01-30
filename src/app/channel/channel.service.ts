@@ -33,7 +33,7 @@ export class ChannelService {
 
     private async joinUser(user: string, channel: Channel, socket: SocketIO.Socket) {
         let socketId = (await this.socketDao.getSocketByUser(user)).socketId;
-        socket.adapter.add(socketId, channel.id);
-        socket.to(socketId).emit(CHANNEL_CREATED, channel);
+        socket.adapter.add(socketId, channel._id);
+        socket.nsp.to(socketId).emit(CHANNEL_CREATED, channel);
     }
 }
