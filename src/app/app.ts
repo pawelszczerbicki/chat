@@ -12,7 +12,8 @@ import {Container} from '@decorators/di';
 
 
 log.configure({level: 'debug', transports: [new log.transports.Console({colorize: true})]});
-process.on('unhandledRejection', error => log.error(error));
+process.on('unhandledRejection', log.error);
+process.on('uncaughtException', log.error);
 
 class App {
     private readonly server: Server;
@@ -25,9 +26,9 @@ class App {
 
     start(port: number) {
         this.connectToDb()
-            .then((client) => this.configureContainer(client))
+            .then(client => this.configureContainer(client))
             .then(() => this.server.listen(port, () => log.info(`App started on port ${port}`)))
-            .catch(err => log.error(err));
+            .catch(log.error);
     }
 
     private connectToDb() {
