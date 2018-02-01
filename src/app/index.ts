@@ -7,7 +7,6 @@ import {HistoryRequest} from './message/history.request';
 
 @Injectable()
 @Controller('/')
-//TODO handle all promises rejection
 export class Index {
 
     constructor(private channelService: ChannelService) {
@@ -15,7 +14,6 @@ export class Index {
 
     @Event(MESSAGE)
    async onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket) {
-        //TODO history promise can be rejected - remember to handle it globally
         let history = await this.channelService.pushMessage(msg.text, msg.to, socket.id);
         socket.to(msg.to).emit('message', history);
     }

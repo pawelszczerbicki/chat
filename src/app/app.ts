@@ -12,6 +12,7 @@ import {Container} from '@decorators/di';
 
 
 log.configure({level: 'debug', transports: [new log.transports.Console({colorize: true})]});
+process.on('unhandledRejection', error => log.error(error));
 
 class App {
     private readonly server: Server;
