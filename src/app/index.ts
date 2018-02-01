@@ -16,6 +16,7 @@ export class Index {
     @Event(MESSAGE)
     onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket): void {
         this.channelService.pushMessage(msg.text, msg.to, socket.id);
+        //TODO send message with from, date, 
         socket.nsp.to(msg.to).emit('message', msg.text);
     }
 
@@ -34,6 +35,6 @@ export class Index {
     @Event(CHANNEL_HISTORY)
     async channelHistory(@Args() request: HistoryRequest, @Socket() socket: SocketIO.Socket) {
         let history = await this.channelService.channelHistory(request.channelId, request.pager, socket.id);
-        socket.emit(CHANNEL_HISTORY, history);
+        socket.emit(CHANNEL_HISTORY, history!.history);
     }
 }
