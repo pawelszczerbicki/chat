@@ -5,6 +5,7 @@ import {ChannelDao} from './channel.dao';
 import {SocketDao} from '../socket/socket.dao';
 import {UserSocket} from '../socket/user.socket';
 import {Page} from '../page/page';
+import {History} from '../message/history';
 
 @Injectable()
 export class ChannelService {
@@ -26,10 +27,12 @@ export class ChannelService {
         fetched.users.forEach(u => this.joinUser(u, fetched, socket));
     }
 
-    async pushMessage(text: string, channelId: string, socketId: string) {
+    async pushMessage(text: string, channelId: string, socketId: string): Promise<History> {
         //TODO get user from socket if auth enabled
         let user = await this.socketDao.getUserBySocket(socketId);
-        return this.channelDao.pushMessage({text, date: new Date(), from: user}, channelId);
+        let msg: History = {text, date: new Date(), from: user};
+        this.channelDao.pushMessage(msg, channelId);
+        return Promise.resolve(msg);
     }
 
     async channelHistory(id: string, page: Page, socketId: string) {

@@ -22,7 +22,8 @@ export class ChannelDao {
     async getOrCreate(channel: Channel): Promise<Channel> {
         channel.users.sort();
         let {users} = channel;
-        return (await this.mongo.findOneAndUpdate({users}, {'$set': {users}}, {upsert: true, returnOriginal: false})).value;
+        return (await this.mongo.findOneAndUpdate({users}, {'$set': {users}},
+            {upsert: true, returnOriginal: false, projection: {_id: 1, users: 1}})).value;
     }
 
     conversations(users: string) {

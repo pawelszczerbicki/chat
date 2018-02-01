@@ -23,7 +23,7 @@ Send this event to create conversation between people
 `message`  
 Sends message  
 **Client:**  `{to: 'channelId', text: 'Hello'}`  
-**Server:** just send text - Will be improved  
+**Server:** `{HISTORY}` 
 
 `channelCreated`  
 Event is send by server when channel is successfully created  

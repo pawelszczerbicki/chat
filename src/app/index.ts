@@ -14,10 +14,10 @@ export class Index {
 
     //todo check if user is in channel
     @Event(MESSAGE)
-    onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket): void {
-        this.channelService.pushMessage(msg.text, msg.to, socket.id);
+   async onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket) {
+        let history = await this.channelService.pushMessage(msg.text, msg.to, socket.id);
         //TODO send message with from, date, 
-        socket.nsp.to(msg.to).emit('message', msg.text);
+        socket.nsp.to(msg.to).emit('message', history);
     }
 
     //TODO add leave room msg
