@@ -46,6 +46,10 @@ export class ChannelService {
         return this.channelDao.conversations(user);
     }
 
+    removeSocket(socketId: string) {
+        this.socketDao.removeSocket(socketId);
+    }
+
     private async joinUser(user: string, channel: Channel, socket: SocketIO.Socket) {
         let socketId = await this.socketDao.getSocketByUser(user);
         socket.adapter.add(socketId, channel._id);

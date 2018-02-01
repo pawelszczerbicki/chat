@@ -1,4 +1,4 @@
-import {Args, attachControllers, Controller, Event, Socket} from '@decorators/socket';
+import {Args, attachControllers, Controller, Disconnect, Event, Socket} from '@decorators/socket';
 import {Injectable} from '@decorators/di';
 import {Channel} from './channel/channel';
 import {CHANNEL_HISTORY, CONVERSATIONS, CREATE_CHANNEL, MESSAGE} from './config/events';
@@ -12,8 +12,13 @@ export class Index {
     constructor(private channelService: ChannelService) {
     }
 
+    @Disconnect()
+    onDisconnect(@Socket() socket: SocketIO.Socket) {
+        this.channelService.removeSocket(socket.id);
+    }
+
     @Event(MESSAGE)
-   async onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket) {
+    async onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket) {
         let history = await this.channelService.pushMessage(msg.text, msg.to, socket.id);
         socket.to(msg.to).emit('message', history);
     }
