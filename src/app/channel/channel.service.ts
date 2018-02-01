@@ -23,7 +23,7 @@ export class ChannelService {
         channel.users.push(user);
 
         let fetched = await this.channelDao.getOrCreate(channel);
-        fetched.users.forEach(u => this.joinUser(u, channel, socket));
+        fetched.users.forEach(u => this.joinUser(u, fetched, socket));
     }
 
     async pushMessage(text: string, channelId: string, socketId: string) {
