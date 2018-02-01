@@ -34,8 +34,8 @@ export class Index {
     }
 
     @Event(CHANNEL_HISTORY)
-    async channelHistory(@Args() request: HistoryRequest, @Socket() socket: SocketIO.Socket) {
-        socket.emit(CHANNEL_HISTORY, (await this.channelService.channelHistory(request.channelId, request.pager, socket.id))!.history);
+    async channelHistory(@Args() req: HistoryRequest, @Socket() socket: SocketIO.Socket) {
+        socket.emit(CHANNEL_HISTORY, (await this.channelService.channelHistory(req.channelId, req.pager, socket.id))!.history);
     }
 
     @Event(CONVERSATIONS)

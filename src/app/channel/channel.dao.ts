@@ -16,7 +16,7 @@ export class ChannelDao {
 
     getHistory(channelId: string, user: string, page: Page) {
         return this.mongo.findOne<Channel>({_id: new ObjectID(channelId), users: user},
-            {projection: {history: {'$slice': [page.skip(), page.size]}}});
+            {projection: {history: {'$slice': [(page.page - 1) * page.size, page.size]}}});
     }
 
     async getOrCreate(channel: Channel): Promise<Channel> {
