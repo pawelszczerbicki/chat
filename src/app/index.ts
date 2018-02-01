@@ -13,11 +13,10 @@ export class Index {
     constructor(private channelService: ChannelService) {
     }
 
-    //todo check if user is in channel
     @Event(MESSAGE)
    async onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket) {
+        //TODO history promise can be rejected - remember to handle it globally
         let history = await this.channelService.pushMessage(msg.text, msg.to, socket.id);
-        //TODO send message with from, date, 
         socket.to(msg.to).emit('message', history);
     }
 

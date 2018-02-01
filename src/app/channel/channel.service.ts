@@ -31,8 +31,8 @@ export class ChannelService {
         //TODO get user from socket if auth enabled
         let user = await this.socketDao.getUserBySocket(socketId);
         let msg: History = {text, date: new Date(), from: user};
-        this.channelDao.pushMessage(msg, channelId);
-        return Promise.resolve(msg);
+        let matched = (await this.channelDao.pushMessage(msg, channelId)).matchedCount;
+        return matched > 0 ? Promise.resolve(msg) : Promise.reject('User not in channel');
     }
 
     async channelHistory(id: string, page: Page, socketId: string) {
