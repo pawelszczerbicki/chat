@@ -25,6 +25,10 @@ export class ChannelDao {
         return (await this.mongo.findOneAndUpdate({users}, {'$set': {users}}, {upsert: true, returnOriginal: false})).value;
     }
 
+    conversations(users: string) {
+        return this.mongo.find<Channel>({users}).sort('lastMessage').project({history: {'$slice': 1}});
+    }
+
     pushMessage(msg: History, id: string): Promise<any> {
         return this.mongo.updateOne({_id: new ObjectID(id)}, {'$push': {history: msg}, '$set': {lastMessage: msg.date}});
     }

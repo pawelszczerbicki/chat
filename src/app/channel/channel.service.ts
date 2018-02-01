@@ -1,9 +1,13 @@
 import {Injectable} from '@decorators/di';
 import {Channel} from './channel';
-import {CHANNEL_CREATED} from '../config/keys';
+import {CHANNEL_CREATED} from '../config/events';
 import {ChannelDao} from './channel.dao';
 import {SocketDao} from '../socket/socket.dao';
-import {UserSocket} from '../socket/user.socket';
+import {UserSocket} from '..    conversations(): any {
+
+throw new Error('Method not implemented.');
+}
+/socket/user.socket';
 import {Page} from '../page/page';
 
 @Injectable()
@@ -36,6 +40,11 @@ export class ChannelService {
         //TODO get user from socket if auth enabled
         let user = await this.socketDao.getUserBySocket(socketId);
         return this.channelDao.getHistory(id, user, page);
+    }
+
+    async conversations(socketId: string) {
+        let user = await this.socketDao.getUserBySocket(socketId);
+        return this.channelDao.conversations(user);
     }
 
     private async joinUser(user: string, channel: Channel, socket: SocketIO.Socket) {
