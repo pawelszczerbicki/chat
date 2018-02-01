@@ -37,8 +37,7 @@ Get history for channel
 `conversations`  
 Get conversations for current user  
 **Client:** empty payload  
-**Server:** `{_id: 'channelId'}, users: ['test'], history: [{HISTORY}]` 
-where history can have one or no elements
+**Server:** `{_id: 'channelId'}, users: ['test'], history: [{HISTORY}]` history - one or zero elements
 
 ## Objects
 ### HISTORY
