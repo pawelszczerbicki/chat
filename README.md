@@ -12,24 +12,24 @@ User have to be authenticated using JWT provided in query string.
 **Client** - event send by client    
 **Server** - event send by server    
 
-`nick` <br/>
-Send this event to login user. METHOD IS TEMPORARY !!! Will be removed<br/>
-**Client:** `{nick: 'some'}`<br/> <br/>
+`nick`  
+Send this event to login user. METHOD IS TEMPORARY !!! Will be removed  
+**Client:** `{nick: 'some'}`  
 
-`createChannel`<br/>
-Send this event to create conversation between people <br/>
-**Client:** `{users: ['test']}`, where users is list of users you want to talk to <br/><br/>
+`createChannel`  
+Send this event to create conversation between people  
+**Client:** `{users: ['test']}`, where users is list of users you want to talk to  
 
-`message` <br/>
-Sends message <br/>
-**Client:**  `{to: 'channelId', text: 'Hello'}` <br/>
-**Server:** just send text - Will be improved <br/><br/>
+`message`  
+Sends message  
+**Client:**  `{to: 'channelId', text: 'Hello'}`  
+**Server:** just send text - Will be improved  
 
-`channelCreated` <br/>
-Event is send by server when channel is successfully created <br/>
-**Server:** `{_id: "someid", users: ['test']}` <br/><br/>
+`channelCreated`  
+Event is send by server when channel is successfully created  
+**Server:** `{_id: "someid", users: ['test']}`  
 
-`channelHistory` <br/>
-Get history for channel <br/>
-**Client:** `{channelId: 'channelId', pager: {page:1, size: 10}` <br/>
+`channelHistory`  
+Get history for channel  
+**Client:** `{channelId: 'channelId', pager: {page:1, size: 10}`  
 **Server:** `[from: 'some', date: '2018-01-30 16:50:04.714', text: 'Hello']`
