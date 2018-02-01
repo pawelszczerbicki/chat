@@ -3,11 +3,7 @@ import {Channel} from './channel';
 import {CHANNEL_CREATED} from '../config/events';
 import {ChannelDao} from './channel.dao';
 import {SocketDao} from '../socket/socket.dao';
-import {UserSocket} from '..    conversations(): any {
-
-throw new Error('Method not implemented.');
-}
-/socket/user.socket';
+import {UserSocket} from '../socket/user.socket';
 import {Page} from '../page/page';
 
 @Injectable()
