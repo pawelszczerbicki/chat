@@ -9,8 +9,8 @@ Connect to websocket on path `http://localhost:3000`
 User have to be authenticated using JWT provided in query string.
 
 ### Socket events
-**Client** - event send by client<br/>
-**Server** - event send by server<br/>
+**Client** - event send by client<br />
+**Server** - event send by server<br />
 
 `nick` <br/>
 Send this event to login user. METHOD IS TEMPORARY !!! Will be removed<br/>
