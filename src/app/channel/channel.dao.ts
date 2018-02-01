@@ -27,7 +27,7 @@ export class ChannelDao {
     }
 
     conversations(users: string) {
-        return this.mongo.find<Channel>({users}).sort('lastMessage').project({history: {'$slice': 1}});
+        return this.mongo.find<Channel>({users}).sort({lastMessage: 1}).project({history: {'$slice': -1}}).toArray();
     }
 
     pushMessage(msg: History, id: string): Promise<any> {

@@ -7,6 +7,7 @@ import {HistoryRequest} from './message/history.request';
 
 @Injectable()
 @Controller('/')
+//TODO handle all promises rejection
 export class Index {
 
     constructor(private channelService: ChannelService) {
