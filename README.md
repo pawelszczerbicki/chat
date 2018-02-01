@@ -2,7 +2,7 @@
 Chat app written in `Typescript`, `NodeJS` and `socket.io`.
 
 ## Development
-`npm run dev` app will be listening on `http://localhost:3000`
+`npm run dev` app will be listening on `http://localhost:3000` with hot reload
 
 ## Usage
 Connect to websocket on path `http://localhost:3000`
