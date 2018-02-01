@@ -17,7 +17,7 @@ export class Index {
    async onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket) {
         let history = await this.channelService.pushMessage(msg.text, msg.to, socket.id);
         //TODO send message with from, date, 
-        socket.nsp.to(msg.to).emit('message', history);
+        socket.to(msg.to).emit('message', history);
     }
 
     //TODO add leave room msg
