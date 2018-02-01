@@ -8,7 +8,7 @@ Chat app written in `Typescript`, `NodeJS` and `socket.io`.
 Connect to websocket on path `http://localhost:3000`
 User have to be authenticated using JWT provided in query string.
 
-### Socket events
+## Socket events
 **Client** - event send by client    
 **Server** - event send by server    
 
@@ -32,10 +32,14 @@ Event is send by server when channel is successfully created
 `channelHistory`  
 Get history for channel  
 **Client:** `{channelId: 'channelId', pager: {page:1, size: 10}`  
-**Server:** `[{from: 'some', date: '2018-01-30 16:50:04.714', text: 'Hello'}]`  
+**Server:** `[{HISTORY}]`  
 
 `conversations`  
 Get conversations for current user  
 **Client:** empty payload  
-**Server:** `{_id: 'channelId'}, users: ['test'], history: [[{from: 'some', date: '2018-01-30 16:50:04.714', text: 'Hello'}]]` 
+**Server:** `{_id: 'channelId'}, users: ['test'], history: [{HISTORY}]` 
 where history can have one or no elements
+
+## Objects
+### HISTORY
+`{from: 'some', date: '2018-01-30 16:50:04.714', text: 'Hello'}`
