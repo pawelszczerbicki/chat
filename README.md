@@ -9,27 +9,27 @@ Connect to websocket on path `http://localhost:3000`
 User have to be authenticated using JWT provided in query string.
 
 ### Socket events
-Client - event send by client
-Server - event send by server
+**Client** - event send by client<br/>
+**Server** - event send by server<br/>
 
-`nick`
-Send this event to login user. METHOD IS TEMPORARY !!! Will be removed
-**Client:** `{nick: 'some'}`
+`nick` <br/>
+Send this event to login user. METHOD IS TEMPORARY !!! Will be removed<br/>
+**Client:** `{nick: 'some'}`<br/> <br/>
 
-`createChannel`
-Send this event to create conversation between people
-**Client:** `{users: ['test']}`, where users is list of users you want to talk to
+`createChannel`<br/>
+Send this event to create conversation between people <br/>
+**Client:** `{users: ['test']}`, where users is list of users you want to talk to <br/><br/>
 
-`message`
-Sends message
-**Client:**  `{to: 'channelId', text: 'Hello'}`
-**Server:** just send text - Will be improved
+`message` <br/>
+Sends message <br/>
+**Client:**  `{to: 'channelId', text: 'Hello'}` <br/>
+**Server:** just send text - Will be improved <br/><br/>
 
-`channelCreated`
-Event is send by server when channel is successfully created
-**Server:** `{_id: "someid", users: ['test']}`
+`channelCreated` <br/>
+Event is send by server when channel is successfully created <br/>
+**Server:** `{_id: "someid", users: ['test']}` <br/><br/>
 
-`channelHistory`
-Get history for channel
-**Client:** `{channelId: 'channelId', pager: {page:1, size: 10}`
+`channelHistory` <br/>
+Get history for channel <br/>
+**Client:** `{channelId: 'channelId', pager: {page:1, size: 10}` <br/>
 **Server:** `[from: 'some', date: '2018-01-30 16:50:04.714', text: 'Hello']`
