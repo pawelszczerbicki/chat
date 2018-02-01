@@ -1,8 +1,9 @@
 import {Args, attachControllers, Controller, Event, Socket} from '@decorators/socket';
 import {Injectable} from '@decorators/di';
 import {Channel} from './channel/channel';
-import {CREATE_CHANNEL, MESSAGE} from './config/keys';
+import {CHANNEL_HISTORY, CREATE_CHANNEL, MESSAGE} from './config/keys';
 import {ChannelService} from './channel/channel.service';
+import {HistoryRequest} from './message/history.request';
 
 @Injectable()
 @Controller('/')
@@ -28,5 +29,11 @@ export class Index {
     @Event(CREATE_CHANNEL)
     createChannel(@Args() channel: Channel, @Socket() socket: SocketIO.Socket) {
         return this.channelService.createChannel(channel, socket);
+    }
+
+    @Event(CHANNEL_HISTORY)
+    async channelHistory(@Args() request: HistoryRequest, @Socket() socket: SocketIO.Socket) {
+        let history = await this.channelService.channelHistory(request.channelId, request.pager, socket.id);
+        socket.emit(CHANNEL_HISTORY, history);
     }
 }

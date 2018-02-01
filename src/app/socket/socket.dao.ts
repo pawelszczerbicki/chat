@@ -12,15 +12,15 @@ export class SocketDao {
         this.mongo = db.collection('sockets');
     }
 
-    async save(socket: UserSocket) {
-        return await this.mongo.updateOne({user: socket.user}, {'$set': {socketId: socket.socketId}}, {upsert: true});
+     save(socket: UserSocket) {
+        return this.mongo.updateOne({user: socket.user}, {'$set': {socketId: socket.socketId}}, {upsert: true});
     }
 
-    async getSocketByUser(user: string): Promise<UserSocket> {
-        return await this.mongo.findOne({user});
+    async getSocketByUser(user: string) {
+        return (await this.mongo.findOne<UserSocket>({user}))!.socketId;
     }
 
-    async getUserBySocket(socketId: string): Promise<UserSocket> {
-        return await this.mongo.findOne({socketId});
+     async getUserBySocket(socketId: string) {
+        return (await this.mongo.findOne<UserSocket>({socketId}))!.user;
     }
 }

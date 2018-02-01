@@ -6,6 +6,7 @@ export const JWT_KEY: string = 'JWT_KEY';
 export const DEFAULT_JWT_KEY: string = 'secret';
 export const MESSAGE: string = 'message';
 export const CREATE_CHANNEL: string = 'createChannel';
+export const CHANNEL_HISTORY: string = 'channelHistory';
 export const CHANNEL_CREATED: string = 'channelCreated';
 export const DB: string = 'DATABASE';
 export const DEFAULT_DB: string = 'xynteo-dev';

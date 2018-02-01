@@ -4,6 +4,7 @@ import {CHANNEL_CREATED} from '../config/keys';
 import {ChannelDao} from './channel.dao';
 import {SocketDao} from '../socket/socket.dao';
 import {UserSocket} from '../socket/user.socket';
+import {Page} from '../page/page';
 
 @Injectable()
 export class ChannelService {
@@ -18,8 +19,8 @@ export class ChannelService {
 
     async createChannel(channel: Channel, socket: SocketIO.Socket) {
         //TODO get user from socket if auth enabled
-        let userSocket = await this.socketDao.getUserBySocket(socket.id);
-        channel.users.push(userSocket.user);
+        let user = await this.socketDao.getUserBySocket(socket.id);
+        channel.users.push(user);
 
         let fetched = await this.channelDao.getOrCreate(channel);
         fetched.users.forEach(u => this.joinUser(u, channel, socket));
@@ -27,12 +28,18 @@ export class ChannelService {
 
     async pushMessage(text: string, channelId: string, socketId: string) {
         //TODO get user from socket if auth enabled
-        let user = (await this.socketDao.getUserBySocket(socketId)).user;
+        let user = await this.socketDao.getUserBySocket(socketId);
         return this.channelDao.pushMessage({text, date: new Date(), from: user}, channelId);
     }
 
+    async channelHistory(id: string, page: Page, socketId: string) {
+        //TODO get user from socket if auth enabled
+        let user = await this.socketDao.getUserBySocket(socketId);
+        return this.channelDao.getHistory(id, user, page);
+    }
+
     private async joinUser(user: string, channel: Channel, socket: SocketIO.Socket) {
-        let socketId = (await this.socketDao.getSocketByUser(user)).socketId;
+        let socketId = await this.socketDao.getSocketByUser(user);
         socket.adapter.add(socketId, channel._id);
         socket.nsp.to(socketId).emit(CHANNEL_CREATED, channel);
     }
