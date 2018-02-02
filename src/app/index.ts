@@ -1,10 +1,9 @@
-import {Args, attachControllers, Controller, Disconnect, Event, Socket} from '@decorators/socket';
+import {Ack, Args, attachControllers, Controller, Disconnect, Event, Socket} from '@decorators/socket';
 import {Injectable} from '@decorators/di';
 import {Channel} from './channel/channel';
 import {CHANNEL_HISTORY, CONVERSATIONS, CREATE_CHANNEL, MESSAGE} from './config/events';
 import {ChannelService} from './channel/channel.service';
 import {HistoryRequest} from './message/history.request';
-import {Ack} from '@decorators/socket/src';
 
 @Injectable()
 @Controller('/')
@@ -19,9 +18,15 @@ export class Index {
     }
 
     @Event(MESSAGE)
-    async onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket, @Ack() ack: (id) => any) {
+    async onMessage(@Args() msg: Message, @Socket() socket, @Ack() ack) {
+        //TODO workaround, issue https://github.com/serhiisol/node-decorators/issues/85
+        if (typeof ack !== 'function') {
+            let temp = ack;
+            ack = socket;
+            socket = temp;
+        }
         let history = await this.channelService.pushMessage(msg.text, msg.to, socket.id);
-        socket.to(msg.to).emit('message', history);
+        socket.to(msg.to).emit(MESSAGE, history);
         ack(msg.id);
     }
 

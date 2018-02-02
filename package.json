@@ -11,8 +11,7 @@
   },
   "devDependencies": {
     "@decorators/di": "^1.0.1",
-    "@decorators/express": "^2.2.0",
-    "@decorators/socket": "^3.0.0",
+    "@decorators/socket": "^3.0.1",
     "@types/chai": "^4.1.0",
     "@types/express": "^4.11.0",
     "@types/mocha": "^2.2.46",
@@ -29,7 +28,7 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
-    "@decorators/socket": "^3.0.0",
+    "@decorators/socket": "^3.0.1",
     "express": "^4.16.2",
     "mongodb": "^3.0.1",
     "socket.io": "^2.0.4",
