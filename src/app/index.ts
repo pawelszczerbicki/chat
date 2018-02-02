@@ -4,6 +4,7 @@ import {Channel} from './channel/channel';
 import {CHANNEL_HISTORY, CONVERSATIONS, CREATE_CHANNEL, MESSAGE} from './config/events';
 import {ChannelService} from './channel/channel.service';
 import {HistoryRequest} from './message/history.request';
+import {Ack} from '@decorators/socket/src';
 
 @Injectable()
 @Controller('/')
@@ -18,9 +19,10 @@ export class Index {
     }
 
     @Event(MESSAGE)
-    async onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket) {
+    async onMessage(@Args() msg: Message, @Socket() socket: SocketIO.Socket, @Ack() ack: (id) => any) {
         let history = await this.channelService.pushMessage(msg.text, msg.to, socket.id);
         socket.to(msg.to).emit('message', history);
+        ack(msg.id);
     }
 
     //TODO add leave room msg
