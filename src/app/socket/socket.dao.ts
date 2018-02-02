@@ -12,7 +12,7 @@ export class SocketDao {
         this.mongo = db.collection('sockets');
     }
 
-    save(socket: UserSocket) {
+    upsert(socket: UserSocket) {
         return this.mongo.updateOne({user: socket.user}, {'$set': {socketId: socket.socketId}}, {upsert: true});
     }
 

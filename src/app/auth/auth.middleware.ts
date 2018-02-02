@@ -18,10 +18,10 @@ export class AuthMiddleware implements Middleware {
     }
 
     public use(io, socket: Socket, next) {
-        this.authorizer(socket, (...args) => {
+        this.authorizer(socket, async (...args) => {
             if (socket[token])
-                this.socketDao.save({user: socket[token][username], socketId: socket.id})
-                    .then(() => next(...args));
+                await this.socketDao.upsert({user: socket[token][username], socketId: socket.id});
+            next(...args);
         });
     }
 }
