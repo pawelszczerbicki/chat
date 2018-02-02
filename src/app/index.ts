@@ -25,13 +25,6 @@ export class Index {
         ack(msg.id);
     }
 
-    //TODO add leave room msg
-    //TODO test method because auth is turned off
-    @Event('nick')
-    nickname(@Args() msg, @Socket() socket: SocketIO.Socket) {
-        return this.channelService.nick({user: msg.nick, socketId: socket.id});
-    }
-
     @Event(CREATE_CHANNEL)
     createChannel(@Args() channel: Channel, @Socket() socket: SocketIO.Socket) {
         return this.channelService.createChannel(channel, socket);

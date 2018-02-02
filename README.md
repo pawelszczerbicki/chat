@@ -12,10 +12,6 @@ User have to be authenticated using JWT provided in query string.
 **Client** - event send by client    
 **Server** - event send by server    
 
-`nick`  
-Send this event to login user. METHOD IS TEMPORARY !!! Will be removed  
-**Client:** `{nick: 'some'}`  
-
 `createChannel`  
 Send this event to create conversation between people  
 **Client:** `{users: ['test']}`, where users is list of users you want to talk to  

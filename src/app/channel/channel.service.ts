@@ -3,7 +3,6 @@ import {Channel} from './channel';
 import {CHANNEL_CREATED} from '../config/events';
 import {ChannelDao} from './channel.dao';
 import {SocketDao} from '../socket/socket.dao';
-import {UserSocket} from '../socket/user.socket';
 import {Page} from '../page/page';
 import {History} from '../message/history';
 
@@ -11,11 +10,6 @@ import {History} from '../message/history';
 export class ChannelService {
 
     constructor(private channelDao: ChannelDao, private socketDao: SocketDao) {
-    }
-
-    //TODO remove after turning on security
-    async nick(userSocket: UserSocket) {
-        return this.socketDao.save(userSocket);
     }
 
     async createChannel(channel: Channel, socket: SocketIO.Socket) {
