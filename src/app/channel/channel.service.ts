@@ -26,12 +26,11 @@ export class ChannelService {
         return matched > 0 ? Promise.resolve(msg) : Promise.reject('User not in channel');
     }
 
-    async channelHistory(id: string, page: Page, user: string) {
+    channelHistory(id: string, page: Page, user: string) {
         return this.channelDao.getHistory(id, user, page);
     }
 
-    async conversations(socketId: string) {
-        let user = await this.socketDao.getUserBySocket(socketId);
+    conversations(user: string) {
         return this.channelDao.conversations(user);
     }
 

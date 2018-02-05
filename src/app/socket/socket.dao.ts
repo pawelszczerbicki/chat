@@ -23,8 +23,4 @@ export class SocketDao {
     async getSocketByUser(user: string) {
         return (await this.mongo.findOne<UserSocket>({user}))!.socketId;
     }
-
-    async getUserBySocket(socketId: string) {
-        return (await this.mongo.findOne<UserSocket>({socketId}))!.user;
-    }
 }

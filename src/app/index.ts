@@ -43,6 +43,6 @@ export class Index {
 
     @Event(CONVERSATIONS)
     async conversations(@Socket() socket: SocketIO.Socket) {
-        socket.emit(CONVERSATIONS, await this.channelService.conversations(socket.id));
+        socket.emit(CONVERSATIONS, await this.channelService.conversations(socket[USER]));
     }
 }
