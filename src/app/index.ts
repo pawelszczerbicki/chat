@@ -4,6 +4,7 @@ import {Channel} from './channel/channel';
 import {CHANNEL_HISTORY, CONVERSATIONS, CREATE_CHANNEL, MESSAGE} from './config/events';
 import {ChannelService} from './channel/channel.service';
 import {HistoryRequest} from './message/history.request';
+import {USER} from './config/keys';
 
 @Injectable()
 @Controller('/')
@@ -25,7 +26,7 @@ export class Index {
             ack = socket;
             socket = temp;
         }
-        let history = await this.channelService.pushMessage(msg.text, msg.to, socket.id);
+        let history = await this.channelService.pushMessage(msg.text, msg.to, socket[USER]);
         socket.to(msg.to).emit(MESSAGE, history);
         ack(msg.id);
     }
@@ -37,7 +38,7 @@ export class Index {
 
     @Event(CHANNEL_HISTORY)
     async channelHistory(@Args() req: HistoryRequest, @Socket() socket: SocketIO.Socket) {
-        socket.emit(CHANNEL_HISTORY, (await this.channelService.channelHistory(req.channelId, req.pager, socket.id))!.history);
+        socket.emit(CHANNEL_HISTORY, (await this.channelService.channelHistory(req.channelId, req.pager, socket[USER]))!.history);
     }
 
     @Event(CONVERSATIONS)
