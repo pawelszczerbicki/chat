@@ -25,14 +25,10 @@ class App {
     }
 
     start(port: number) {
-        this.connectToDb()
+        MongoClient.connect(getProp(DB_URL, DEFAULT_DB_URL))
             .then(client => this.configureContainer(client))
             .then(() => this.server.listen(port, () => log.info(`App started on port ${port}`)))
             .catch(log.error);
-    }
-
-    private connectToDb() {
-        return MongoClient.connect(getProp(DB_URL, DEFAULT_DB_URL));
     }
 
     private configureContainer(client: MongoClient) {

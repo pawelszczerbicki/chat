@@ -1,4 +1,3 @@
-import {Middleware} from '@decorators/socket/src';
 import * as socketJwt from 'socketio-jwt';
 import {getProp} from '../config/config';
 import {DEFAULT_JWT_KEY, JWT_KEY, USER} from '../config/keys';
@@ -6,11 +5,11 @@ import {SocketDao} from '../socket/socket.dao';
 import {Injectable} from '@decorators/di';
 import Socket = SocketIO.Socket;
 
-const token: string = 'decoded_token';
-const username: string = 'user_name';
+const token = 'decoded_token';
+const username = 'user_name';
 
 @Injectable()
-export class AuthMiddleware implements Middleware {
+export class AuthMiddleware {
     private readonly authorizer;
 
     constructor(private socketDao: SocketDao) {

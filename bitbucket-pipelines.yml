@@ -1,0 +1,9 @@
+image: node
+pipelines:
+  branches:
+    dev:
+      - step:
+          caches:
+            - node
+          script:
+            - npm run deploy:test

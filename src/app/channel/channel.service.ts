@@ -16,13 +16,13 @@ export class ChannelService {
     async createChannel(channel: Channel, socket: SocketIO.Socket) {
         channel.users.push(socket[USER]);
 
-        let fetched = await this.channelDao.getOrCreate(channel);
+        const fetched = await this.channelDao.getOrCreate(channel);
         fetched.users.forEach(u => this.joinUser(u, fetched, socket));
     }
 
     async pushMessage(text: string, channelId: string, user: string): Promise<History> {
-        let msg: History = {text, date: new Date(), from: user};
-        let matched = (await this.channelDao.pushMessage(msg, channelId)).matchedCount;
+        const msg: History = {text, date: new Date(), from: user};
+        const matched = (await this.channelDao.pushMessage(msg, channelId)).matchedCount;
         return matched > 0 ? Promise.resolve(msg) : Promise.reject('User not in channel');
     }
 
@@ -39,7 +39,7 @@ export class ChannelService {
     }
 
     private async joinUser(user: string, channel: Channel, socket: SocketIO.Socket) {
-        let socketId = await this.socketDao.getSocketByUser(user);
+        const socketId = await this.socketDao.getSocketByUser(user);
         socket.adapter.add(socketId, channel._id);
         socket.nsp.to(socketId).emit(CHANNEL_CREATED, channel);
     }

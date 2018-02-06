@@ -17,7 +17,7 @@ export class SocketDao {
     }
 
     removeSocket(socketId: string) {
-        this.mongo.deleteOne({socketId})
+        this.mongo.deleteOne({socketId});
     }
 
     async getSocketByUser(user: string) {

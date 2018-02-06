@@ -20,13 +20,13 @@ export class Index {
 
     @Event(MESSAGE)
     async onMessage(@Args() msg: Message, @Socket() socket, @Ack() ack) {
-        //TODO workaround, issue https://github.com/serhiisol/node-decorators/issues/85
+        // TODO workaround, issue https://github.com/serhiisol/node-decorators/issues/85
         if (typeof ack !== 'function') {
-            let temp = ack;
+            const temp = ack;
             ack = socket;
             socket = temp;
         }
-        let history = await this.channelService.pushMessage(msg.text, msg.to, socket[USER]);
+        const history = await this.channelService.pushMessage(msg.text, msg.to, socket[USER]);
         socket.to(msg.to).emit(MESSAGE, history);
         ack(msg.id);
     }
