@@ -14,8 +14,7 @@ export class ChannelService {
     }
 
     async createChannel(channel: Channel, socket: SocketIO.Socket) {
-        channel.users.push(socket[USER]);
-        channel.users = [... new Set(channel.users)];
+        channel.users = [... new Set(channel.users).add(socket[USER])];
         const fetched = await this.channelDao.getOrCreate(channel);
         fetched.users.forEach(u => this.joinUser(u, fetched, socket));
     }
