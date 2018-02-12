@@ -6,6 +6,7 @@ import {SocketDao} from '../socket/socket.dao';
 import {Page} from '../page/page';
 import {History} from '../message/history';
 import {USER} from '../config/keys';
+import {ChannelDetails} from './channel.details';
 
 @Injectable()
 export class ChannelService {
@@ -16,7 +17,7 @@ export class ChannelService {
     async createChannel(channel: Channel, socket: SocketIO.Socket) {
         channel.users = [... new Set(channel.users).add(socket[USER])];
         const fetched = await this.channelDao.getOrCreate(channel);
-        fetched.users.forEach(u => this.joinUser(u, fetched, socket));
+        fetched.users.forEach(u => this.joinUser(u.email, fetched, socket));
     }
 
     async pushMessage(text: string, channelId: string, user: string): Promise<History> {
@@ -37,7 +38,7 @@ export class ChannelService {
         this.socketDao.removeSocket(socketId);
     }
 
-    private async joinUser(user: string, channel: Channel, socket: SocketIO.Socket) {
+    private async joinUser(user: string, channel: ChannelDetails, socket: SocketIO.Socket) {
         const socketId = await this.socketDao.getSocketByUser(user);
         socket.adapter.add(socketId, channel._id);
         socket.nsp.to(socketId).emit(CHANNEL_CREATED, channel);

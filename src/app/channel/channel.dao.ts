@@ -5,6 +5,7 @@ import {MONGO} from '../config/keys';
 import {History} from '../message/history';
 import {ObjectID} from 'bson';
 import {Page} from '../page/page';
+import {ChannelDetails} from './channel.details';
 
 @Injectable()
 export class ChannelDao {
@@ -19,7 +20,7 @@ export class ChannelDao {
             {projection: {history: {'$slice': [(page.page - 1) * page.size, page.size]}}});
     }
 
-    async getOrCreate(channel: Channel): Promise<Channel> {
+    async getOrCreate(channel: Channel): Promise<ChannelDetails> {
         channel.users.sort();
         const {users} = channel;
         if ((await this.mongo.count({users}) < 1))
@@ -37,11 +38,11 @@ export class ChannelDao {
     }
 
     private joinAndFilterUsers(users) {
-        return this.mongo.aggregate<Channel>([
+        return this.mongo.aggregate<ChannelDetails>([
             {$match: {users}},
             {$unwind: '$users'},
             {$lookup: {from: 'user', localField: 'users', foreignField: 'email', as: 'users'}},
-            {$project: {users: {name: 1, surname: 1, avatarUrl: 1}}}
+            {$project: {users: {email: 1, name: 1, surname: 1, avatarUrl: 1}}}
         ]);
     }
 }

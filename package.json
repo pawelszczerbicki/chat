@@ -7,7 +7,7 @@
     "deploy:test": "SERVICE=chat-test npm run deploy",
     "deploy": "npm run build && ecs-updater",
     "build": "npm install && tslint --project . && tsc",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'tslint --project . && ts-node' src/app/app.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app/app.ts",
     "test": "mocha -r ts-node/register src/test/**/*.ts"
   },
   "devDependencies": {
