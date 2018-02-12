@@ -24,7 +24,7 @@ export class ChannelDao {
         const {users} = channel;
         if ((await this.mongo.count({users}) < 1))
             await this.mongo.insertOne({users});
-        return (await this.joinUsers().match({users}).toArray())[0];
+        return (await this.joinAndFilterUsers(users).toArray())[0];
     }
 
     conversations(users: string) {
@@ -36,23 +36,12 @@ export class ChannelDao {
             {'$push': {history: msg}, '$set': {lastMessage: msg.date}});
     }
 
-    private joinUsers() {
+    private joinAndFilterUsers(users) {
         return this.mongo.aggregate<Channel>([
-            {
-                $unwind: '$users'
-            },
-            {
-                $lookup:
-                    {
-                        from: 'user',
-                        localField: 'users',
-                        foreignField: 'email',
-                        as: 'users'
-                    }
-            },
-            {
-                $project: {users: {name: 1, surname: 1, avatarUrl: 1}}
-            }
+            {$match: {users}},
+            {$unwind: '$users'},
+            {$lookup: {from: 'user', localField: 'users', foreignField: 'email', as: 'users'}},
+            {$project: {users: {name: 1, surname: 1, avatarUrl: 1}}}
         ]);
     }
 }
