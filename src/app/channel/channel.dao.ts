@@ -22,8 +22,9 @@ export class ChannelDao {
     async getOrCreate(channel: Channel): Promise<Channel> {
         channel.users.sort();
         const {users} = channel;
-        return (await this.mongo.findOneAndUpdate({users}, {'$set': {users}},
-            {upsert: true, returnOriginal: false, projection: {_id: 1, users: 1}})).value;
+        if ((await this.mongo.count({users}) < 1))
+            await this.mongo.insertOne({users});
+        return (await this.joinUsers().match({users}).toArray())[0];
     }
 
     conversations(users: string) {
@@ -33,5 +34,25 @@ export class ChannelDao {
     pushMessage(msg: History, id: string) {
         return this.mongo.updateOne({_id: new ObjectID(id), users: msg.from},
             {'$push': {history: msg}, '$set': {lastMessage: msg.date}});
+    }
+
+    private joinUsers() {
+        return this.mongo.aggregate<Channel>([
+            {
+                $unwind: '$users'
+            },
+            {
+                $lookup:
+                    {
+                        from: 'user',
+                        localField: 'users',
+                        foreignField: 'email',
+                        as: 'users'
+                    }
+            },
+            {
+                $project: {users: {name: 1, surname: 1, avatarUrl: 1}}
+            }
+        ]);
     }
 }
