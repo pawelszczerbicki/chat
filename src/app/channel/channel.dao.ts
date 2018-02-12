@@ -40,7 +40,6 @@ export class ChannelDao {
     private joinAndFilterUsers(users) {
         return this.mongo.aggregate<ChannelDetails>([
             {$match: {users}},
-            {$unwind: '$users'},
             {$lookup: {from: 'user', localField: 'users', foreignField: 'email', as: 'users'}},
             {$project: {users: {email: 1, name: 1, surname: 1, avatarUrl: 1}}}
         ]);

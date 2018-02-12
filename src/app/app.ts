@@ -9,6 +9,7 @@ import {Index} from './index';
 import {AuthMiddleware} from './auth/auth.middleware';
 import {MongoClient} from 'mongodb';
 import {Container} from '@decorators/di';
+import {ChannelDetails} from './channel/channel.details';
 
 
 log.configure({level: 'debug', transports: [new log.transports.Console({colorize: true})]});
