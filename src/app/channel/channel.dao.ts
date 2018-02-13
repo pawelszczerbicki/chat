@@ -29,7 +29,7 @@ export class ChannelDao {
     }
 
     conversations(users: string) {
-        return this.mongo.find<Channel>({users}).sort({lastMessage: 1}).project({history: {'$slice': -1}}).toArray();
+        return this.joinAndFilterUsers(users, {history: {'$slice': -1}, lastMessage: 1}).sort({lastMessage: 1}).toArray();
     }
 
     pushMessage(msg: History, id: string) {
@@ -37,11 +37,11 @@ export class ChannelDao {
             {'$push': {history: msg}, '$set': {lastMessage: msg.date}});
     }
 
-    private joinAndFilterUsers(users) {
+    private joinAndFilterUsers(users: string[] | string, fields?: any) {
         return this.mongo.aggregate<ChannelDetails>([
             {$match: {users}},
             {$lookup: {from: 'user', localField: 'users', foreignField: 'email', as: 'users'}},
-            {$project: {users: {email: 1, name: 1, surname: 1, avatarUrl: 1}}}
+            {$project: {...fields, users: {email: 1, name: 1, surname: 1, avatarUrl: 1}}}
         ]);
     }
 }
