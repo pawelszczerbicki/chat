@@ -17,7 +17,7 @@ export class ChannelDao {
 
     getHistory(channelId: string, user: string, page: Page) {
         return this.mongo.findOne<Channel>({_id: new ObjectID(channelId), users: user},
-            {projection: {history: {'$slice': [(page.page - 1) * page.size, page.size]}}});
+            {projection: {history: {$slice: [(page.page - 1) * page.size, page.size]}}});
     }
 
     async getOrCreate(channel: Channel): Promise<ChannelDetails> {
@@ -29,12 +29,12 @@ export class ChannelDao {
     }
 
     conversations(users: string) {
-        return this.joinAndFilterUsers(users, {history: {'$slice': ['history', -1]}, lastMessage: 1}).sort({lastMessage: 1}).toArray();
+        return this.joinAndFilterUsers(users, {history: {$slice: ['$history', -1]}, lastMessage: 1}).sort({lastMessage: 1}).toArray();
     }
 
     pushMessage(msg: History, id: string) {
         return this.mongo.updateOne({_id: new ObjectID(id), users: msg.from},
-            {'$push': {history: msg}, '$set': {lastMessage: msg.date}});
+            {$push: {history: msg}, $set: {lastMessage: msg.date}});
     }
 
     private joinAndFilterUsers(users: string[] | string, fields?: any) {
