@@ -29,7 +29,7 @@ export class ChannelDao {
     }
 
     conversations(users: string) {
-        return this.joinAndFilterUsers(users, {history: {'$slice': -1}, lastMessage: 1}).sort({lastMessage: 1}).toArray();
+        return this.joinAndFilterUsers(users, {history: {'$slice': ['history', -1]}, lastMessage: 1}).sort({lastMessage: 1}).toArray();
     }
 
     pushMessage(msg: History, id: string) {
