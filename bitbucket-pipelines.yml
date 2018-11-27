@@ -7,3 +7,5 @@ pipelines:
             - node
           script:
             - npm run deploy:test
+options:
+  docker: true

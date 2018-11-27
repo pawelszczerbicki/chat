@@ -18,6 +18,9 @@ export class Index {
         this.channelService.removeSocket(socket.id);
     }
 
+    // TODO add more tests
+    // TODO change to AWS pipeline and code deploy
+
     @Event(MESSAGE)
     async onMessage(@Args() msg: Message, @Socket() socket, @Ack() ack) {
         // TODO workaround, issue https://github.com/serhiisol/node-decorators/issues/85

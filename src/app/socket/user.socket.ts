@@ -1,4 +1,4 @@
-export class UserSocket {
-    public socketId: string;
-    public user: string;
+export interface UserSocket {
+    socketId: string;
+    user: string;
 }
