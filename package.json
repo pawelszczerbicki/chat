@@ -1,8 +1,8 @@
 {
-  "name": "xynteo-chat",
+  "name": "chat",
   "version": "1.0.0",
   "private": true,
-  "description": "Xynteo chat",
+  "description": "Chat",
   "scripts": {
     "deploy:test": "SERVICE=chat-test npm run deploy",
     "deploy": "npm run build && ecs-updater",
